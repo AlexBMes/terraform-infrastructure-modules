@@ -20,7 +20,7 @@ def test_config_map_data(query):
     """
 
     expected_data = {
-        "mosquitto.conf" : "log_dest stdout\r\nlog_type all\r\nlog_timestamp true\r\nlistener 9001\r\n",
+        "mosquitto.conf" : "log_dest stdout\r\nlog_type all\r\nlog_timestamp true\r\nlistener 9001",
         "test" : "test"
     }
 
