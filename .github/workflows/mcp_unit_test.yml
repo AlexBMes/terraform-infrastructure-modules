@@ -38,6 +38,7 @@ jobs:
 
     - name: Run unit tests
       run: |
+        EXIT_CODE=0
         for dir in $(find $(pwd) \( -not -path "$(pwd)/module_import/*" \) -and \( -type f -name 'main.tf' \) |  sed -r 's|/[^/]+$||'); do
           echo "Directory: ${dir}"
           cd $dir
@@ -48,9 +49,10 @@ jobs:
             if [ "$result" != pass ]
             then 
               echo "${result}: Unit test for ${dir} failed"
-              exit 222
+              EXIT_CODE=222
             else 
               echo "Passed"
             fi
           done
         done
+        exit $EXIT_CODE
