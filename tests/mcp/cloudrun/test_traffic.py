@@ -30,13 +30,15 @@ def test_traffic_config(query):
 
     expected_data = {
         "latest_revision": "true",
-        "percent": "75"
+        "percent": "74"
     }
 
     if query == expected_data:
         return {"result": "pass"}
     else:
-        return {"result" : "fail"}
+        return {"result" : "fail",
+                "expected" : "{}".format(expected_data),
+                "received" : "{}".format(query)}
 
 
 
