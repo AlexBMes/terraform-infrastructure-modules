@@ -44,7 +44,7 @@ jobs:
         echo "all is still good"
         terraform init
         terraform apply -auto-approve
-        terraform output-json test_traffic | jq -r '.[].value.result'
+        terraform output-json test_traffic | jq  '.[].value.result'
 #        EXIT_CODE=0
 #        MESSAGE="PASSED: All unit tests passed"
 #        for dir in $(find $(pwd) \( -not -path "$(pwd)/module_import/*" \) -and \( -type f -name 'main.tf' \) |  sed -r 's|/[^/]+$||'); do
