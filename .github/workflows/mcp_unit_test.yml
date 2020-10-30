@@ -39,7 +39,8 @@ jobs:
     - name: Run unit tests
       run: |
         echo "all is good"
-        cd ${pwd}/cloudrun
+        cd cloudrun
+        echo "all is still good"
         terraform init
         terraform apply -auto-approve
         cat terraform output-json
