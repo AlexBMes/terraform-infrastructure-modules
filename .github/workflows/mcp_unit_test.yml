@@ -38,28 +38,24 @@ jobs:
 
     - name: Run unit tests
       run: |
-        echo "all is good"
-        cd cloudrun
-        ls
-        echo "all is still good"
-        terraform init
-        terraform apply -auto-approve
-        terraform output-json test_traffic | jq  '.[].value'
-#        EXIT_CODE=0
-#        MESSAGE="PASSED: All unit tests passed"
-#        for dir in $(find $(pwd) \( -not -path "$(pwd)/module_import/*" \) -and \( -type f -name 'main.tf' \) |  sed -r 's|/[^/]+$||'); do
-#          echo "Directory: ${dir}"
-#          cd $dir
-#          terraform init
-#          terraform apply -auto-approve
-#          for value in $(terraform output -json | jq -c '.[].value'); do
-#            result=$(echo -n "$value" | jq -r '.result')
-#            if [ "$result" != pass ]
-#            then
-#              MESSAGE="FAIL: There are failed unit tests"
-#              EXIT_CODE=222
-#            fi
-#          done
-#        done
-#        echo $MESSAGE
-#        exit $EXIT_CODE
+        MESSAGE="PASSED: All unit tests passed"
+        for dir in $(find $(pwd) \( -not -path "$(pwd)/module_import/*" \) -and \( -type f -name 'main.tf' \) |  sed -r 's|/[^/]+$||'); do
+          echo "Directory: ${dir}"
+          cd $dir
+          terraform init
+          terraform apply -auto-approve
+          for key in $(terraform output -json | jq -r 'keys[]'); do
+            output=$(terraform output -json $key | jq -r )
+            result=$(echo $output | jq -r '.result')
+            echo ${result^^}
+            if [ "$result" != "pass" ]
+            then
+              MESSAGE="FAIL: There are failed unit tests"
+              echo "    Expected data: $(echo $output | jq -r '.expected')"
+              echo "    Received data: $(echo $output | jq -r '.received')"
+              EXIT_CODE=3
+            fi
+          done
+        done
+        echo $MESSAGE
+        exit $EXIT_CODE
