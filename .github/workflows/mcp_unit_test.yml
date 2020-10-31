@@ -44,9 +44,7 @@ jobs:
           cd $dir
           terraform init
           terraform apply -auto-approve
-#          echo "GOT HERE"
           for key in $(terraform output -json | jq -r 'keys[]'); do
-#            echo "ENTERED LOOP"
             output=$(terraform output -json $key | jq)
             result=$(echo $output | jq -r '.result')
             echo ${result^^}
