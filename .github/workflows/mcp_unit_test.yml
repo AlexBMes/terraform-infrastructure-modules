@@ -44,13 +44,9 @@ jobs:
           cd $dir
           terraform init
           terraform apply -auto-approve
-          echo "GOT HERE"
           for key in $(terraform output -json | jq -r 'keys[]'); do
-            echo "ENTERED LOOP"
             output=$(terraform output -json $key)
-            echo "MADE OUTPUT"
             result=$(echo $output | jq -r '.result')
-            echo "MADE RESULT"
             echo ${result^^}
             if [ "$result" != "pass" ]
             then

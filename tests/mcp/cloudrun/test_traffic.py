@@ -30,7 +30,7 @@ def test_traffic_config(query):
 
     expected_data = {
         "latest_revision": "true",
-        "percent": "74"
+        "percent": "75"
     }
 
     if query == expected_data:
