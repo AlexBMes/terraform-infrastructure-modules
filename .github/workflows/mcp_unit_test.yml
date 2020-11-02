@@ -9,13 +9,13 @@ on:
     - master
 
 jobs:    
-  verify-branch:
-    name: 'Check head branch'
-    runs-on: ubuntu-latest
-    if: contains(github.head_ref, 'MCP-') != true
-    steps:
-      - name: 'Cancel Workflow'
-        uses: andymckay/cancel-action@0.2
+#   verify-branch:
+#     name: 'Check head branch'
+#     runs-on: ubuntu-latest
+#     if: contains(github.head_ref, 'MCP-') != true
+#     steps:
+#       - name: 'Cancel Workflow'
+#         uses: andymckay/cancel-action@0.2
         
   terraform:
     name: 'Unit Test'
@@ -32,6 +32,10 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
+      
+    - name: 'Verify Workflow'
+      if: contains(github.head_ref, 'MCP-') != true
+      uses: andymckay/cancel-action@0.2
       
     # Install Python
     - name: Install Python
