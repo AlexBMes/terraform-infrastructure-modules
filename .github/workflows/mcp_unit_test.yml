@@ -1,13 +1,21 @@
 name: 'MCP Unit Tests'
 
 on:
-  push:
+  pull_request:
     branches:
     - master
 
-jobs:
+jobs:    
+  verify-branch:
+    name: 'Check head branch'
+    runs-on: ubuntu-latest
+    if: contains(github.head_ref, 'MCP-') != true
+    steps:
+      - name: 'Cancel Workflow'
+        uses: andymckay/cancel-action@0.2
+        
   terraform:
-    name: 'Terraform'
+    name: 'Unit Test'
     runs-on: ubuntu-latest
     env:
       working-directory: ./tests/mcp
