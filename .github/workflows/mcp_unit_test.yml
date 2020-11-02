@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./tests/mcp
+      
+    if: contains(github.head_ref, 'MCP-') == true
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
@@ -32,11 +34,7 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
-      
-    - name: 'Verify Workflow'
-      if: contains(github.head_ref, 'MCP-') != true
-      uses: andymckay/cancel-action@0.2
-      
+
     # Install Python
     - name: Install Python
       uses: actions/setup-python@v2
