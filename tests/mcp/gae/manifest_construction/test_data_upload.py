@@ -58,5 +58,6 @@ def test_src_files_manifest_format(query):
                 "expected" : "{}".format(expected_data),
                 "received" : "{}".format(query)}
 
+
 if __name__ == '__main__':
     test_src_files_manifest_format()

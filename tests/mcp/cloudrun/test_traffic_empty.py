@@ -34,5 +34,6 @@ def test_traffic_config(query):
                 "expected" : "{}".format(expected_data),
                 "received" : "{}".format(query)}
 
+
 if __name__ == '__main__':
     test_traffic_config()

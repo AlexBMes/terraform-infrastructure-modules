@@ -7,22 +7,14 @@ except Exception as e:
     print(e, file=stderr)
 
 @python_validator
-def test_secret_data(query):
+def test_job(query):
     """
-    Tests the configuration of `data` mapping. `data ` contains configuration
-    data, mapped like the following:
-    data = {
-        api_host             = "myhost:443"
-        db_host              = "dbhost:5432"
-        "my_config_file.yml" = "${file("${path.module}/my_config_file.yml")}"
-    }
+    Checks the data specified in the required metadata
 
     """
 
     expected_data = {
-        "secret.file" : "c29tZXN1cGVyc2VjcmV0IGZpbGUgY29udGVudHMgbm9ib2R5IHNob3VsZCBzZWU=",
-        "login" : "login",
-        "password" : "password"
+        "name" : "pi"
     }
 
     if query == expected_data:
@@ -35,4 +27,4 @@ def test_secret_data(query):
 
 
 if __name__ == '__main__':
-    test_secret_data()
+    test_job()
