@@ -8,22 +8,16 @@ on:
     branches: 
       - master
 
-jobs:    
-#   verify-branch:
-#     name: 'Check head branch'
-#     runs-on: ubuntu-latest
-#     if: contains(github.head_ref, 'MCP-') != true
-#     steps:
-#       - name: 'Cancel Workflow'
-#         uses: andymckay/cancel-action@0.2
-        
+jobs:           
   terraform:
     name: 'Unit Test'
     runs-on: ubuntu-latest
     env:
       working-directory: ./tests/mcp
-      
-    if: contains(github.head_ref, 'MCP-') == true
+    if: contains(github.head_ref, 'MCP') &&
+        (startswith(github.head_ref, 'feat') ||
+        startswith(github.head_ref, 'bug') ||
+        startswith(github.head_ref, 'patch'))
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
